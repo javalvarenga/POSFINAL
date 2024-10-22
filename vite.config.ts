@@ -4,7 +4,7 @@ import * as path from 'path';
 import { existsSync } from 'fs';
 import * as dotenv from 'dotenv';
 
-// Dotenv 是一个零依赖的模块，它能将环境变量中的变量从 .env 文件加载到 process.env 中
+// Dotenv
 dotenv.config({
     path: existsSync('.env') ? '.env' : path.resolve('envs', `.env.${process.env.NODE_ENV}`)
 });

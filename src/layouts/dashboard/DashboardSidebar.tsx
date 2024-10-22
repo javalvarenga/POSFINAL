@@ -69,9 +69,7 @@ const DashboardSidebar = (props: Props): JSX.Element => {
                     </AccountStyle>
                 </Link>
             </Box>
-
             <NavSection navConfig={sidebarConfig} />
-
             <Box sx={{ flexGrow: 1 }} />
         </Scrollbar>
     );
