@@ -40,22 +40,30 @@ const CreateProductForm = () => {
             price: '',
             quantity: '',
             description: '',
-            image: null,
+            image: null
         },
         validationSchema: Yup.object({
             productName: Yup.string().required('El nombre del producto es requerido'),
-            price: Yup.number().required('El precio es requerido').positive('El precio debe ser positivo'),
-            quantity: Yup.number().required('La cantidad es requerida').integer('Debe ser un número entero'),
+            price: Yup.number()
+                .required('El precio es requerido')
+                .positive('El precio debe ser positivo'),
+            quantity: Yup.number()
+                .required('La cantidad es requerida')
+                .integer('Debe ser un número entero'),
             description: Yup.string().required('La descripción es requerida'),
-            image: Yup.mixed().required('La imagen es requerida'),
+            image: Yup.mixed().required('La imagen es requerida')
         }),
         onSubmit: (values) => {
             console.log('Valores del formulario:', values);
-        },
+        }
     });
 
+    const { resetForm, handleSubmit } = formik;
+
+    console.log('formik', formik.values);
+
     return (
-        <form onSubmit={formik.handleSubmit}>
+        <form onSubmit={handleSubmit}>
             {/* Formulario para crear producto */}
             <TextField
                 fullWidth
@@ -123,7 +131,7 @@ const CreateProductForm = () => {
                         textAlign: 'center',
                         cursor: 'pointer',
                         backgroundColor: dragActive ? '#e6f7ff' : '#f9f9f9',
-                        transition: 'background-color 0.2s ease',
+                        transition: 'background-color 0.2s ease'
                     }}
                 >
                     {fileName ? (
