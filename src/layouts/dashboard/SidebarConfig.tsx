@@ -23,7 +23,7 @@ const sidebarConfig: NavItemConfig[] = [
         icon: getIcon(peopleFill)
     },
     {
-        title: 'product',
+        title: 'productos',
         path: '/dashboard/products',
         icon: getIcon(shoppingBagFill)
     },

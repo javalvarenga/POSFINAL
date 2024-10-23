@@ -20,15 +20,15 @@ interface Props {
 }
 
 export const ShopProductCard = (props: Props): JSX.Element => {
-    const { name, cover, price, colors, status, priceSale } = props.product;
+    const { productId, imageUrl, price, description, quantity, createdAt } = props.product;
 
     return (
         <Card>
             <Box sx={{ pt: '100%', position: 'relative' }}>
-                {status && (
+                {productId && (
                     <Label
                         variant="filled"
-                        color={(status === 'sale' && 'error') || 'info'}
+                        color={'info'}
                         sx={{
                             zIndex: 9,
                             top: 16,
@@ -37,34 +37,33 @@ export const ShopProductCard = (props: Props): JSX.Element => {
                             textTransform: 'uppercase'
                         }}
                     >
-                        {<>{status}</>}
+                        {<>{productId}</>}
                     </Label>
                 )}
-                <ProductImgStyle alt={name} src={cover} />
-            </Box>
+                 <ProductImgStyle alt={description} src={imageUrl} />
+             </Box>
 
             <Stack spacing={2} sx={{ p: 3 }}>
                 <Link to="#" color="inherit" underline="hover" component={RouterLink}>
                     <Typography variant="subtitle2" noWrap>
-                        {name}
+                        {description}
                     </Typography>
                 </Link>
 
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
-                    <ColorPreview colors={colors} />
+                  {/*   <ColorPreview colors={colors} /> */}
                     <Typography variant="subtitle1">
-                        <Typography
+                         <Typography
                             component="span"
                             variant="body1"
                             sx={{
                                 color: 'text.disabled',
-                                textDecoration: 'line-through'
                             }}
                         >
-                            {priceSale && fCurrency(priceSale)}
+                            {quantity+ quantity != 1 ? quantity + ' unidades' : quantity + ' unidad'}
                         </Typography>
-                        &nbsp;
-                        {fCurrency(price)}
+                        &nbsp; &nbsp;&nbsp;
+                        {fCurrency(Number(price))}
                     </Typography>
                 </Stack>
             </Stack>

@@ -10,6 +10,7 @@ import Blog from '@/pages/Blog';
 import User from '@/pages/User';
 import NotFound from '@/pages/Page404';
 
+
 export const Router = (): ReactElement => {
     return (
         <Routes>
@@ -20,6 +21,7 @@ export const Router = (): ReactElement => {
                 <Route path="products" element={<Products />} />
                 <Route path="blog" element={<Blog />} />
                 <Route path="inventario" element={<Products />} />
+                <Route path="customers" element={<Products />} />
             </Route>
             <Route path="/" element={<LogoOnlyLayout />}>
                 <Route path="login" element={<Login />} />
