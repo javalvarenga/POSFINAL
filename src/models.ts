@@ -31,14 +31,15 @@ export interface IAccount {
 }
 
 export interface IProduct {
-    id: string;
-    cover: string;
-    name: string;
-    price: number;
-    priceSale: number | null;
-    colors: string[];
-    status: string | undefined;
-}
+    productId: number;
+    productName: string;
+    description: string;
+    imageUrl: string;
+    price: string;
+    quantity: number;
+    createdAt: string;
+    updatedAt: string;
+  }
 
 export interface NavItemConfig {
     title: string;

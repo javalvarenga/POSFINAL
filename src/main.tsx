@@ -7,13 +7,20 @@ import { HelmetProvider } from 'react-helmet-async';
 import ThemeConfig from '@/theme';
 import ScrollToTop from '@/components/ScrollToTop';
 import Router from '@/routes';
+import { QueryClient, QueryClientProvider } from 'react-query';
+
+const queryClient = new QueryClient();
 
 const App = (): JSX.Element => {
     return (
+        <QueryClientProvider client={queryClient}>
+
         <ThemeConfig>
-            <ScrollToTop />
-            <Router />
+                <ScrollToTop />
+                <Router />
         </ThemeConfig>
+        </QueryClientProvider>
+
     );
 };
 

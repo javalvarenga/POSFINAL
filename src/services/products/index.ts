@@ -18,12 +18,26 @@ export const getAllProducts = async () => {
     }
 };
 
+export const createProduct = async (product) => {
+    /*     const serviceToken = window.localStorage.getItem('serviceToken');
+     */
+    const url = `${PROD_URL}/${BASE_URL}/createProduct`;
+
+    try {
+        const response = await axios.post(url,{ body: product });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching billing orders:', error);
+        throw error;
+    }
+};
+
 
 
 export const getProduct = async (productId) => {
     /*     const serviceToken = window.localStorage.getItem('serviceToken');
      */
-    const url = `${PROD_URL}/${BASE_URL}/getProducts`;
+    const url = `${PROD_URL}/${BASE_URL}/agregarClienteYVenta`;
 
     try {
         const response = await axios.get(url, {

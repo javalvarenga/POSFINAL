@@ -19,6 +19,13 @@ export default defineConfig({
         }
     },
     server: {
+        proxy: {
+            '/api': {
+              target: 'http://localhost:3001',
+              changeOrigin: true,
+              rewrite: (path) => path.replace(/^\/api/, ''),
+            },
+          },
         cors: true,
         port: process.env.VITE_PORT as unknown as number,
         hmr: {

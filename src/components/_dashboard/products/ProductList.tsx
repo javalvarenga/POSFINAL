@@ -4,7 +4,6 @@ import ShopProductCard from '@/components/_dashboard/products/ProductCard';
 
 interface Props {
     products;
-    order?;
 }
 
 const ProductList = (props: Props): JSX.Element => {
