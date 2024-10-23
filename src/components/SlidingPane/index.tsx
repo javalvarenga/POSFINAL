@@ -18,7 +18,7 @@ interface Props {
 }
 
 const SlidingPane = (props: Props): JSX.Element => {
-    const { title, content, isOpenSlide, onCloseSlide,onFinish } = props;
+    const { title, content, isOpenSlide, onCloseSlide, onFinish } = props;
 
     return (
         <Drawer
@@ -46,13 +46,7 @@ const SlidingPane = (props: Props): JSX.Element => {
             <Divider />
 
             <Scrollbar>
-                <div style={{ minHeight: '100vh' }}>
-                    <form action="">
-                        <input type="text" /> <br />
-                        <input type="text" /> <br />
-                        <button type='button' onClick={onFinish}>Submit</button>
-                    </form>
-                </div>      
+                <div style={{ padding: '0 1.3rem',margin:'1.6rem 0' }}>{content && content}</div>
             </Scrollbar>
 
             <Box sx={{ p: 3 }}></Box>
