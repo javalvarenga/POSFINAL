@@ -9,6 +9,7 @@ import Products from '@/pages/Products';
 import Blog from '@/pages/Blog';
 import User from '@/pages/User';
 import NotFound from '@/pages/Page404';
+import Sales from '@/pages/Sales'
 
 
 export const Router = (): ReactElement => {
@@ -23,6 +24,7 @@ export const Router = (): ReactElement => {
                 <Route path="inventario" element={<Products />} />
                 <Route path="customers" element={<Products />} />
                 <Route path="categories" element={<User />} />
+                <Route path="sales" element={<Sales/>} />
             </Route>
             <Route path="/" element={<LogoOnlyLayout />}>
                 <Route path="login" element={<Login />} />
