@@ -4,8 +4,7 @@ const PROD_URL = 'http://localhost:3001';
 const BASE_URL = 'api/products';
 
 export const getAllProducts = async () => {
-    /*     const serviceToken = window.localStorage.getItem('serviceToken');
-     */
+
     const url = `${PROD_URL}/${BASE_URL}/getProducts`;
 
     try {
@@ -13,45 +12,64 @@ export const getAllProducts = async () => {
 
         return response.data;
     } catch (error) {
-        console.error('Error fetching billing orders:', error);
+        console.error('Error :', error);
         throw error;
     }
 };
 
 export const createProduct = async (product) => {
-    /*     const serviceToken = window.localStorage.getItem('serviceToken');
-     */
+
     const url = `${PROD_URL}/${BASE_URL}/createProduct`;
 
     try {
-        const response = await axios.post(url,{ body: product });
+        const response = await axios.post(url, { ...product });
         return response.data;
     } catch (error) {
-        console.error('Error fetching billing orders:', error);
+        console.error('Error :', error);
         throw error;
     }
 };
 
-
-
 export const getProduct = async (productId) => {
-    /*     const serviceToken = window.localStorage.getItem('serviceToken');
-     */
-    const url = `${PROD_URL}/${BASE_URL}/agregarClienteYVenta`;
+
+    const url = `${PROD_URL}/${BASE_URL}/getProduct/`;
 
     try {
         const response = await axios.get(url, {
-            /* headers: {
-            Authorization: `${serviceToken}`
-            }, */
+ 
             params: {
-                productId: productId,
+                productId: productId
             }
         });
 
         return response.data;
     } catch (error) {
-        console.error('Error fetching billing orders:', error);
+        console.error('Error:', error);
+        throw error;
+    }
+};
+
+export const deleteProduct = async (productId) => {
+    const url = `${PROD_URL}/${BASE_URL}/deleteProduct/${productId}`;
+
+    try {
+        const response = await axios.delete(url);
+
+        return response.data;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+};
+
+export const updateProduct = async (product) => {
+    const url = `${PROD_URL}/${BASE_URL}/updateProduct`;
+
+    try {
+        const response = await axios.put(url, { ...product });
+        return response.data;
+    } catch (error) {
+        console.error('Error:', error);
         throw error;
     }
 };

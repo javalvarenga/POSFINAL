@@ -14,11 +14,10 @@ interface Props {
     formik?: any;
     content: JSX.Element;
     onCloseSlide?: () => void;
-    onFinish?: () => void;
 }
 
 const SlidingPane = (props: Props): JSX.Element => {
-    const { title, content, isOpenSlide, onCloseSlide, onFinish } = props;
+    const { title, content, isOpenSlide, onCloseSlide } = props;
 
     return (
         <Drawer

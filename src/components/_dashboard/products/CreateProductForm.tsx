@@ -2,8 +2,18 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { FormGroup, TextField, Button, Box } from '@mui/material';
+import { createProduct, updateProduct } from '@/services/products';
+import {  isImageFile, toBase64 } from '@/utils';
+import SweetAlertHandler from '@/components/sweetAlert';
+import { IProduct } from '@/models';
 
-const CreateProductForm = () => {
+interface Props {
+    product?: IProduct;
+    onFinish?: () => void;
+}
+
+const CreateProductForm = (props: Props) => {
+    const { onFinish, product } = props;
     const [dragActive, setDragActive] = useState(false);
     const [fileName, setFileName] = useState('');
 
@@ -36,11 +46,11 @@ const CreateProductForm = () => {
     // Inicialización de Formik
     const formik = useFormik({
         initialValues: {
-            productName: '',
-            price: '',
-            quantity: '',
-            description: '',
-            image: null
+            productName: product?.productName || '',
+            price: product?.price || '',
+            quantity: product?.quantity || '',
+            description: product?.description || '',
+            image: product?.imageUrl || null
         },
         validationSchema: Yup.object({
             productName: Yup.string().required('El nombre del producto es requerido'),
@@ -53,14 +63,34 @@ const CreateProductForm = () => {
             description: Yup.string().required('La descripción es requerida'),
             image: Yup.mixed().required('La imagen es requerida')
         }),
-        onSubmit: (values) => {
-            console.log('Valores del formulario:', values);
+        onSubmit: async (values) => {
+            try {
+                const imageData = isImageFile(values.image) ? values.image : await toBase64(values.image);
+
+                const productData = {
+                    ...values,
+                    productId: product?.productId,
+                    image: imageData
+                };
+
+                const action = product ? await updateProduct(productData) : await createProduct(productData);
+                SweetAlertHandler({
+                    title: product ? 'Producto actualizado correctamente' : 'Producto creado correctamente',
+                    icon: 'success'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        console.log('Confirmed');
+                    }
+                });
+                resetForm();
+                onFinish && onFinish();
+            } catch (error) {
+                console.error('Error al crear el producto:', error);
+            }
         }
     });
 
     const { resetForm, handleSubmit } = formik;
-
-    console.log('formik', formik.values);
 
     return (
         <form onSubmit={handleSubmit}>
@@ -115,7 +145,13 @@ const CreateProductForm = () => {
                 helperText={formik.touched.description && formik.errors.description}
                 style={{ marginBottom: '1.3rem' }}
             />
-
+            {product?.imageUrl && (
+                <img
+                    src={formik.values.image || product?.imageUrl || ''}
+                    alt={product?.productName}
+                    style={{ maxHeight: 200, objectFit: 'contain', margin: '0 auto' }}
+                />
+            )}
             {/* Área de arrastrar y soltar */}
             <FormGroup style={{ margin: '1.3rem 0' }}>
                 <Box
@@ -140,6 +176,7 @@ const CreateProductForm = () => {
                         <p>Arrastra y suelta una imagen aquí, o haz clic para seleccionar</p>
                     )}
                 </Box>
+
                 <input
                     type="file"
                     id="fileInput"
@@ -156,8 +193,8 @@ const CreateProductForm = () => {
                 )}
             </FormGroup>
 
-            <Button type="submit" variant="contained" color="primary" fullWidth>
-                Crear Producto
+            <Button type="submit" variant="contained" color={product ? 'warning' : 'primary'} fullWidth>
+                {product ? 'Editar' : 'Crear'} Producto
             </Button>
         </form>
     );
