@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import Page from '@/components/Page';
 
 const Accounts = (): JSX.Element => {
