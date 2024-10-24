@@ -32,7 +32,7 @@ const sidebarConfig: NavItemConfig[] = [
     {
         title: 'cuentas',
         path: '/dashboard/accounts',
-        icon: getIcon(accounttable)
+        icon: <Icon icon="solar:hand-money-bold-duotone" fontSize={45} />
     },
     {
         title: 'blog',
