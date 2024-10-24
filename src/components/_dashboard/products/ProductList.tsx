@@ -4,15 +4,16 @@ import ShopProductCard from '@/components/_dashboard/products/ProductCard';
 
 interface Props {
     products;
+    onDeleteProduct;
 }
 
 const ProductList = (props: Props): JSX.Element => {
-    const { products, ...other } = props;
+    const { products,onDeleteProduct } = props;
     return (
-        <Grid container spacing={3} {...other}>
+        <Grid container spacing={3} >
             {products.map((product) => (
-                <Grid key={product.id} item xs={12} sm={6} md={3}>
-                    <ShopProductCard product={product} />
+                <Grid key={product.productId} item xs={12} sm={6} md={3}>
+                    <ShopProductCard product={product} onDeleteProduct={onDeleteProduct} />
                 </Grid>
             ))}
         </Grid>
