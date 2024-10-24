@@ -9,6 +9,8 @@ import personAddFill from '@iconify/icons-eva/person-add-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
 import { NavItemConfig } from '@/models';
 
+
+
 const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
 
 const sidebarConfig: NavItemConfig[] = [
@@ -26,6 +28,11 @@ const sidebarConfig: NavItemConfig[] = [
         title: 'productos',
         path: '/dashboard/products',
         icon: getIcon(shoppingBagFill)
+    },
+    {
+        title: 'cuentas',
+        path: '/dashboard/accounts',
+        icon: getIcon(accounttable)
     },
     {
         title: 'blog',
