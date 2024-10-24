@@ -24,6 +24,7 @@ export const Router = (): ReactElement => {
                 <Route path="inventario" element={<Products />} />
                 <Route path="customers" element={<Products />} />
                 <Route path="accounts" element={<Accounts/>} />
+                <Route path="categories" element={<User />} />
             </Route>
             <Route path="/" element={<LogoOnlyLayout />}>
                 <Route path="login" element={<Login />} />

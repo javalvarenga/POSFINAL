@@ -39,7 +39,7 @@ const LanguagePopover = (): JSX.Element => {
 
     return (
         <>
-            <IconButton
+          {/*   <IconButton
                 ref={anchorRef}
                 onClick={handleOpen}
                 sx={{
@@ -53,7 +53,7 @@ const LanguagePopover = (): JSX.Element => {
                 }}
             >
                 <img src={LANGS[0].icon} alt={LANGS[0].label} />
-            </IconButton>
+            </IconButton> */}
 
             <MenuPopover open={open} onClose={handleClose} anchorEl={anchorRef.current}>
                 <Box sx={{ py: 1 }}>

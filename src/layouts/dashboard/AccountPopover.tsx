@@ -103,7 +103,9 @@ const AccountPopover = (): JSX.Element => {
                 ))}
 
                 <Box sx={{ p: 2, pt: 1.5 }}>
-                    <Button fullWidth color="inherit" variant="outlined">
+                    <Button fullWidth color="inherit" variant="outlined" onClick={()=>{
+                        location.href = '/login';
+                    }}>
                         Logout
                     </Button>
                 </Box>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import { Box, Card, Link, Typography, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -6,6 +6,8 @@ import { fCurrency } from '@/utils/formatNumber';
 import Label from '../../Label';
 import ColorPreview from '../../ColorPreview';
 import { IProduct } from '@/models';
+import SlidingPane from '@/components/SlidingPane';
+import ProductDetails from './ProductDetails';
 
 const ProductImgStyle = styled('img')({
     top: 0,
@@ -17,10 +19,15 @@ const ProductImgStyle = styled('img')({
 
 interface Props {
     product: IProduct;
+    onDeleteProduct;
 }
 
 export const ShopProductCard = (props: Props): JSX.Element => {
-    const { productId, imageUrl, price, description, quantity, createdAt } = props.product;
+    const [openSlideShowDetails, setOpenSlideShowDetails] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState<any>(null);
+
+    const { productId, imageUrl, price, productName, description, quantity, createdAt } =
+        props.product;
 
     return (
         <Card>
@@ -37,36 +44,60 @@ export const ShopProductCard = (props: Props): JSX.Element => {
                             textTransform: 'uppercase'
                         }}
                     >
-                        {<>{productId}</>}
+                        {<>#{productId}</>}
                     </Label>
                 )}
-                 <ProductImgStyle alt={description} src={imageUrl} />
-             </Box>
+                <ProductImgStyle alt={description} src={imageUrl} />
+            </Box>
 
             <Stack spacing={2} sx={{ p: 3 }}>
-                <Link to="#" color="inherit" underline="hover" component={RouterLink}>
+                <div
+                    style={{ cursor: 'pointer', textDecoration: 'underline' }}
+                    onClick={() => {
+                        setSelectedProduct(props.product);
+                        setOpenSlideShowDetails(true);
+                    }}
+                >
                     <Typography variant="subtitle2" noWrap>
+                        {productName}
+                    </Typography>
+                    <Typography variant="body1" noWrap>
                         {description}
                     </Typography>
-                </Link>
+                </div>
 
                 <Stack direction="row" alignItems="center" justifyContent="space-between">
-                  {/*   <ColorPreview colors={colors} /> */}
+                    {/*   <ColorPreview colors={colors} /> */}
                     <Typography variant="subtitle1">
-                         <Typography
+                        <Typography
                             component="span"
                             variant="body1"
                             sx={{
-                                color: 'text.disabled',
+                                color: 'text.disabled'
                             }}
                         >
-                            {quantity+ quantity != 1 ? quantity + ' unidades' : quantity + ' unidad'}
+                            {quantity != 1
+                                ? quantity + ' unidades'
+                                : quantity + ' unidad'}
                         </Typography>
                         &nbsp; &nbsp;&nbsp;
                         {fCurrency(Number(price))}
                     </Typography>
                 </Stack>
             </Stack>
+            <SlidingPane
+                title="Detalles del Producto"
+                content={<ProductDetails product={selectedProduct} onDeleteProduct={()=>{
+                    setSelectedProduct(null);
+                    setOpenSlideShowDetails(false);
+                    props.onDeleteProduct && props.onDeleteProduct()
+                }} />}
+                isOpenSlide={openSlideShowDetails}
+                onCloseSlide={() => {
+                    setSelectedProduct(null);
+                    setOpenSlideShowDetails(false);
+                }}
+            />
         </Card>
     );
 };
