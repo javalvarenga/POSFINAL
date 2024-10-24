@@ -12,7 +12,7 @@ import NotFound from '@/pages/Page404';
 import Sales from '@/pages/Sales'
 
 
-export const Router = (): ReactElement => {
+export const Router = (): ReactElement => { 
     return (
         <Routes>
             <Route path="/dashboard" element={<DashboardLayout />}>
