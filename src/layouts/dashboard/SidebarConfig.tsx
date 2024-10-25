@@ -53,7 +53,7 @@ const sidebarConfig: NavItemConfig[] = [
         icon: getIcon(alertTriangleFill)
     },
     {
-        title: 'Devolutions',
+        title: 'Devoluciones',
         path: '/dashboard/devolutions',
         icon: <Icon icon="lsicon:sales-return-filled" fontSize={30} />
     },

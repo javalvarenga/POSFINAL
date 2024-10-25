@@ -1,80 +1,82 @@
 import React, { useState } from 'react';
 
 import Page from '@/components/Page';
-import { Box, Container, IconButton, Stack, Typography } from '@mui/material';
+import { Box, Container, Grid, IconButton, Stack, Typography } from '@mui/material';
 import { Icon } from '@iconify/react';
 import SlidingPane from '@/components/SlidingPane';
 import CreateCategoryForm from '@/components/_dashboard/categories/CreateCategoryForm';
 import useGetDevolutions from '@/hooks/devolutions/useGetDevolutions';
 import DynamicTable from '@/components/DynamicTable';
 import CreateDevolutionsForm from '@/components/_dashboard/devolutions/CreateDevolutionsForm';
+import { fDate } from '@/utils/formatTime';
+import BasicIndicator from '@/components/_dashboard/products/BasicIndicator';
 
 const Devolutions = (): JSX.Element => {
     const [openSlideCreateDevolucion, setOpenSlideCreateDevolucion] = useState(false);
     const [queryKey, setQueryKey] = useState(0);
     const { devolutionsList, isFetching } = useGetDevolutions(queryKey);
 
+    const totaldevolutions = devolutionsList.length;
+
     console.log(devolutionsList);
     // columnas para la tabla:
     const columns = [
         { id: 'idDevolucion', label: 'ID Devolución' },
         { id: 'idVenta', label: 'ID Venta' },
-        { id: 'productId', label: 'ID Producto' },
+        { id: 'cantidadProductosDevueltos', label: 'Productos Devueltos' },
         { id: 'motivo', label: 'Motivo' },
         { id: 'fechaDevolucion', label: 'Fecha Devolución' },
-        { id: 'fechaVenta', label: 'Fecha Venta' },
         { id: 'totalVenta', label: 'Total Venta' },
-        { id: 'producto', label: 'Nombre del Producto' },
+        { id: 'productosDevueltos', label: 'Nombre de los Productos' },
     ];
 
+    const mapeddata = devolutionsList.map((devolucion) => {
+        return {
+            ...devolucion,
+            fechaDevolucion: fDate(devolucion.fechaDevolucion),
+        };
+    });
+    
     return (
         <Page title="User | Minimal-UI">
             <Container>
                 <Typography variant="h4">Devoluciones</Typography>
-                
+                <Grid container justifyContent={'center'}>
+                    <Grid item xs={12} sm={6} md={3}>
+                        <BasicIndicator
+                            title="Devoluciones"
+                            value={totaldevolutions}
+                            currency={false}
+                            icon="lsicon:sales-return-outline"
+                        />
+                    </Grid>
+                </Grid>
                 <Stack
                     direction="row"
-                    flexWrap="wrap-reverse"
+                    flexWrap="wrap"
                     alignItems="center"
-                    justifyContent="space-between"
+                    justifyContent="flex-end"
                     sx={{ mb: 5 }}
                 >
-               <IconButton
+                    <IconButton
                         onClick={() => {
-                            location.href = '/dashboard/products';
+                            setOpenSlideCreateDevolucion(true);
                         }}
                     >
-                    <Icon icon="ri:arrow-go-back-line" color='#7189FF' />
+                        <Icon icon="ant-design:plus-outlined" />
                     </IconButton>
-                    <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
-                        <div>
-                            <IconButton
-                                onClick={() => {
-                                    location.href = '/dashboard/products';
-                                }}
-                            >
-                                <Icon icon="si:grid-duotone" />
-                            </IconButton>
-                            <IconButton
-                                onClick={() => {
-                                    setOpenSlideCreateDevolucion(true);
-                                }}
-                            >
-                                <Icon icon="ant-design:plus-outlined" />
-                            </IconButton>
-                        </div>{' '}
-                    </Stack>
-                    <DynamicTable columns={columns} data={devolutionsList} />
+                    <DynamicTable columns={columns} data={mapeddata} />
                 </Stack>
             </Container>
 
             <SlidingPane
                 title="Crear nueva devolución"
                 content={
-                    <CreateDevolutionsForm 
-                    onFinish={() => {
-                        console.log('finished');
-                    }}/>
+                    <CreateDevolutionsForm
+                        onFinish={() => {
+                            setQueryKey(queryKey + 1);
+                            setOpenSlideCreateDevolucion(false);
+                        }} />
                 }
                 isOpenSlide={openSlideCreateDevolucion}
                 onCloseSlide={() => {

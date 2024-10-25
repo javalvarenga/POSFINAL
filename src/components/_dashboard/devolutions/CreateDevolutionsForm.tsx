@@ -17,9 +17,6 @@ const validationSchema = Yup.object().shape({
     p_id_venta: Yup.number()
         .required('El Id de la venta es obligatorio')
         .typeError('Debe ser un número'),
-    p_ProductoId: Yup.number()
-        .required('El Id del producto es obligatorio')
-        .typeError('Debe ser un número'),
     p_motivo: Yup.string()
         .required('El motivo es obligatorio'),
 });
@@ -31,7 +28,6 @@ const CreateDevolutionsForm = (props: Props) => {
     const formik = useFormik({
         initialValues: {
             p_id_venta: '',
-            p_ProductoId: '',
             p_motivo: '',
         
         },
@@ -42,7 +38,6 @@ const CreateDevolutionsForm = (props: Props) => {
                 
                 await createDevolucion({
                     id_venta: values.p_id_venta,
-                    ProductId: values.p_ProductoId,
                     motivo: values.p_motivo
                 });
         
@@ -78,18 +73,6 @@ const CreateDevolutionsForm = (props: Props) => {
                 onBlur={formik.handleBlur}
                 error={formik.touched.p_id_venta && Boolean(formik.errors.p_id_venta)}
                 helperText={formik.touched.p_id_venta && formik.errors.p_id_venta}
-                style={{ marginBottom: '1.3rem' }}
-            />
-            <TextField
-                fullWidth
-                label="ID Producto"
-                id="p_ProductoId"
-                name="p_ProductoId"
-                value={formik.values.p_ProductoId}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                error={formik.touched.p_ProductoId && Boolean(formik.errors.p_ProductoId)}
-                helperText={formik.touched.p_ProductoId && formik.errors.p_ProductoId}
                 style={{ marginBottom: '1.3rem' }}
             />
             <TextField
