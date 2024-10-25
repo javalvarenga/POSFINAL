@@ -7,6 +7,7 @@ import SlidingPane from '@/components/SlidingPane';
 import CreateSalesForm from '@/components/_dashboard/sales/CreateSalesForm';
 import useGetSales from '@/hooks/sales/useGetSales';
 import DynamicTable from '@/components/DynamicTable';
+import { fDateTime } from '@/utils/formatTime';
 
 
 
@@ -15,16 +16,22 @@ const Sales = (): JSX.Element => {
     const [openSlideCreateSales, setOpenSlideCreateSales] = useState(false);
     const [queryKey, setQueryKey] = useState(0);
     const { salesList, isFetching } = useGetSales(queryKey);
-    console.log(salesList);
+    console.log('Sales List: ',salesList)
     const columns = [
-        { id: 'categoryId', label: 'ID' },
-        { id: 'categoryName', label: 'Nombre de la categoría' },
-        { id: 'totalProducts', label: 'Total de productos' },
-        { id: 'totalStock', label: 'Stock total' },
+        { id: 'idVenta', label: 'ID Venta' },
+        { id: 'fecha', label: 'Fecha ' },
+        { id: 'nombre', label: 'Cliente' },
+        { id: 'producto', label: 'Productos' },
+        { id: 'cantidad', label: 'Cantidad'},
+        { id: 'descuento', label: 'Descuento'},
+        { id: 'total', label: 'Total'},
         
     ];
 
-
+    const mappedData = salesList?.map((sale) => ({
+        ...sale,
+        fecha: fDateTime(sale.fecha),
+    }));
     return (
         <Page title="User | Minimal-UI">
         <Typography variant ="h2">  Ventas</Typography>
@@ -46,12 +53,15 @@ const Sales = (): JSX.Element => {
                             </IconButton>
                         </div>{' '}
                     </Stack>
-                    <DynamicTable columns={columns} data={salesList} />
+                    <DynamicTable columns={columns} data={mappedData} />
                 </Stack>
                 <SlidingPane
                 title="Crear nueva venta"
                 content={
-                    <CreateSalesForm/>
+                    <CreateSalesForm  onFinish={() => {
+                        setOpenSlideCreateSales(false) ;
+                        setQueryKey(queryKey + 1);
+                    }}/>
                 }
                 isOpenSlide={openSlideCreateSales}
                 onCloseSlide={() => {
