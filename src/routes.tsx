@@ -10,6 +10,7 @@ import Blog from '@/pages/Blog';
 import User from '@/pages/User';
 import NotFound from '@/pages/Page404';
 import Categories from './pages/Categories';
+import Devolutions from './pages/Devolutions';
 
 
 export const Router = (): ReactElement => {
@@ -24,6 +25,7 @@ export const Router = (): ReactElement => {
                 <Route path="inventario" element={<Products />} />
                 <Route path="customers" element={<Products />} />
                 <Route path="categories" element={<Categories />} />
+                <Route path="Devolutions" element={<Devolutions />} />
             </Route>
             <Route path="/" element={<LogoOnlyLayout />}>
                 <Route path="login" element={<Login />} />

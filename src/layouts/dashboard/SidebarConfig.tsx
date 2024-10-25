@@ -46,7 +46,12 @@ const sidebarConfig: NavItemConfig[] = [
         title: 'Not found',
         path: '/404',
         icon: getIcon(alertTriangleFill)
-    }
+    },
+    {
+        title: 'Devolutions',
+        path: '/dashboard/devolutions',
+        icon: <Icon icon="lsicon:sales-return-filled" fontSize={30} />
+    },
 ];
 
 export default sidebarConfig;
