@@ -28,17 +28,3 @@ export const getDevolutions = async () => {
         throw error;
     }
 };
-
-export const getCategoriesReport = async () => {
-
-    const url = `${PROD_URL}/${BASE_URL}/getCategoriesReport`;
-
-    try {
-        const response = await axios.get(url);
-
-        return response.data;
-    } catch (error) {
-        console.error('Error :', error);
-        throw error;
-    }
-};
