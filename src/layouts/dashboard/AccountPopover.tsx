@@ -14,22 +14,19 @@ const MENU_OPTIONS = [
         label: 'Home',
         icon: homeFill,
         linkTo: '/'
-    },
-    {
-        label: 'Profile',
-        icon: personFill,
-        linkTo: '#'
-    },
-    {
-        label: 'Settings',
-        icon: settings2Fill,
-        linkTo: '#'
     }
 ];
 
 const AccountPopover = (): JSX.Element => {
     const anchorRef = useRef(null);
     const [open, setOpen] = useState(false);
+    const userData = JSON.parse(localStorage.getItem('USER'));
+    console.log('userData', userData);
+    const profileInfo = {
+        displayName: userData?.nombre,
+        username: userData?.usuario,
+        photoURL: Avatar,
+    };
 
     const handleOpen = () => {
         setOpen(true);
@@ -71,10 +68,10 @@ const AccountPopover = (): JSX.Element => {
             >
                 <Box sx={{ my: 1.5, px: 2.5 }}>
                     <Typography variant="subtitle1" noWrap>
-                        {account.displayName}
+                        {profileInfo.displayName}
                     </Typography>
                     <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-                        {account.email}
+                        {profileInfo.username}
                     </Typography>
                 </Box>
 
@@ -103,9 +100,15 @@ const AccountPopover = (): JSX.Element => {
                 ))}
 
                 <Box sx={{ p: 2, pt: 1.5 }}>
-                    <Button fullWidth color="inherit" variant="outlined" onClick={()=>{
-                        location.href = '/login';
-                    }}>
+                    <Button
+                        fullWidth
+                        color="inherit"
+                        variant="outlined"
+                        onClick={() => {
+                            localStorage.setItem('USER', JSON.stringify(null));
+                            location.href = '/login';
+                        }}
+                    >
                         Logout
                     </Button>
                 </Box>

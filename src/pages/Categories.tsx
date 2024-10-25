@@ -1,37 +1,87 @@
 import React, { useState } from 'react';
 
 import Page from '@/components/Page';
-import { IconButton, Typography } from '@mui/material';
+import { Box, Container, IconButton, Stack, Typography } from '@mui/material';
 import { Icon } from '@iconify/react';
 import SlidingPane from '@/components/SlidingPane';
 import CreateCategoryForm from '@/components/_dashboard/categories/CreateCategoryForm';
-import useGetCategories from '@/hooks/categories/useGetCategories';
+import useGetCategoriesReport from '@/hooks/categories/useGetCategoriesReport';
+import DynamicTable from '@/components/DynamicTable';
 
 const Categories = (): JSX.Element => {
     const [openSlideCreateCategory, setOpenSlideCreateCategory] = useState(false);
     const [queryKey, setQueryKey] = useState(0);
-    const { categoriesList, isFetching } = useGetCategories(queryKey);
+    const { categoriesList, isFetching } = useGetCategoriesReport(queryKey);
+
+    // columnas para la tabla:
+    const columns = [
+        { id: 'categoryId', label: 'ID' },
+        { id: 'categoryName', label: 'Nombre de la categoría' },
+        { id: 'totalProducts', label: 'Total de productos' },
+        { id: 'totalStock', label: 'Stock total' },
+        {
+            id: 'mostSoldProductImageUrl',
+            label: 'Producto mas vendido',
+            render: (row) => {
+                return (
+                    row.mostSoldProductImageUrl && (
+                        <div>
+                            <img
+                                src={row.mostSoldProductImageUrl}
+                                alt="producto mas vendido"
+                                width="60"
+                                height="60"
+                            />
+                        </div>
+                    )
+                );
+            }
+        }
+    ];
 
     return (
         <Page title="User | Minimal-UI">
-            <Typography variant="h4">Categories</Typography>
-            <IconButton
-                onClick={() => {
-                    setOpenSlideCreateCategory(true);
-                }}
-            >
-                <Icon icon="ant-design:plus-outlined" />
-            </IconButton>
-            {categoriesList?.map((category) => {
-                return (
-                    <div>
-                        <p>Id: {category.categoryId}</p>
-                        <p>nombre: {category.categoryName}</p>
-                    </div>
-                );
-            })}
+            <Container>
+                <Typography variant="h4">Categorías</Typography>
+                
+                <Stack
+                    direction="row"
+                    flexWrap="wrap-reverse"
+                    alignItems="center"
+                    justifyContent="space-between"
+                    sx={{ mb: 5 }}
+                >
+                    <IconButton
+                        onClick={() => {
+                            location.href = '/dashboard/products';
+                        }}
+                    >
+                    <Icon icon="ri:arrow-go-back-line" color='#7189FF' />
+                    </IconButton>
+                    <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
+                        <div>
+                            <IconButton
+                                onClick={() => {
+                                    location.href = '/dashboard/products';
+                                }}
+                            >
+                                <Icon icon="si:grid-duotone" />
+                            </IconButton>
+                            <IconButton
+                                onClick={() => {
+                                    setOpenSlideCreateCategory(true);
+                                }}
+                            >
+                                <Icon icon="ant-design:plus-outlined" />
+                            </IconButton>
+                        </div>{' '}
+                    </Stack>
+                </Stack>
+                <DynamicTable columns={columns} data={categoriesList} />
+            </Container>
+
             <SlidingPane
-                title="Crear nueva categoria"
+                title="Crear nueva categoría"
                 content={
                     <CreateCategoryForm
                         onFinish={() => {

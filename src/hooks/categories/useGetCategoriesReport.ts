@@ -3,13 +3,13 @@
 import { useQuery } from 'react-query';
 import camelcaseKeys from 'camelcase-keys';
 import { useQueryConfig } from '../../utils/index';
-import { getCategories } from '@/services/categories';
+import { getCategoriesReport } from '@/services/categories';
 
-const useGetCategories = (queryKey) => {
+const useGetCategoriesReport = (queryKey) => {
   // Definir la clave de ejecución basada en la existencia de startDate y endDate
   const { data, isFetching } = useQuery(
-    `CategoriesList-${queryKey}`,
-    () => getCategories(),
+    `CategoriesReport-${queryKey}`,
+    () => getCategoriesReport(),
     {
       ...useQueryConfig,
     }
@@ -19,4 +19,4 @@ const useGetCategories = (queryKey) => {
   return { categoriesList, isFetching };
 };
 
-export default useGetCategories;
+export default useGetCategoriesReport;
