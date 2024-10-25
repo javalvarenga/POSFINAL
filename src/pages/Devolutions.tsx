@@ -7,9 +7,10 @@ import SlidingPane from '@/components/SlidingPane';
 import CreateCategoryForm from '@/components/_dashboard/categories/CreateCategoryForm';
 import useGetDevolutions from '@/hooks/devolutions/useGetDevolutions';
 import DynamicTable from '@/components/DynamicTable';
+import CreateDevolutionsForm from '@/components/_dashboard/devolutions/CreateDevolutionsForm';
 
 const Devolutions = (): JSX.Element => {
-    const [openSlideCreateCategory, setOpenSlideCreateCategory] = useState(false);
+    const [openSlideCreateDevolucion, setOpenSlideCreateDevolucion] = useState(false);
     const [queryKey, setQueryKey] = useState(0);
     const { devolutionsList, isFetching } = useGetDevolutions(queryKey);
 
@@ -38,7 +39,7 @@ const Devolutions = (): JSX.Element => {
                     justifyContent="space-between"
                     sx={{ mb: 5 }}
                 >
-                    <IconButton
+               <IconButton
                         onClick={() => {
                             location.href = '/dashboard/products';
                         }}
@@ -56,29 +57,28 @@ const Devolutions = (): JSX.Element => {
                             </IconButton>
                             <IconButton
                                 onClick={() => {
-                                    setOpenSlideCreateCategory(true);
+                                    setOpenSlideCreateDevolucion(true);
                                 }}
                             >
                                 <Icon icon="ant-design:plus-outlined" />
                             </IconButton>
                         </div>{' '}
                     </Stack>
+                    <DynamicTable columns={columns} data={devolutionsList} />
                 </Stack>
-                <DynamicTable columns={columns} data={devolutionsList} />
             </Container>
 
             <SlidingPane
-                title="Crear nueva categoría"
+                title="Crear nueva devolución"
                 content={
-                    <CreateCategoryForm
-                        onFinish={() => {
-                            console.log('finished');
-                        }}
-                    />
+                    <CreateDevolutionsForm 
+                    onFinish={() => {
+                        console.log('finished');
+                    }}/>
                 }
-                isOpenSlide={openSlideCreateCategory}
+                isOpenSlide={openSlideCreateDevolucion}
                 onCloseSlide={() => {
-                    setOpenSlideCreateCategory(false);
+                    setOpenSlideCreateDevolucion(false);
                 }}
             />
         </Page>
