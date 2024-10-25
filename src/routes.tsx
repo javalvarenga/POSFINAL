@@ -11,6 +11,7 @@ import User from '@/pages/User';
 import NotFound from '@/pages/Page404';
 import Sales from '@/pages/Sales'
 import Categories from './pages/Categories';
+import Devolutions from './pages/Devolutions';
 
 
 export const Router = (): ReactElement => { 
@@ -26,6 +27,7 @@ export const Router = (): ReactElement => {
                 <Route path="customers" element={<Products />} />
                 <Route path="sales" element={<Sales/>} />
                 <Route path="categories" element={<Categories />} />
+                <Route path="Devolutions" element={<Devolutions />} />
             </Route>
             <Route path="/" element={<LogoOnlyLayout />}>
                 <Route path="login" element={<Login />} />
