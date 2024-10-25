@@ -9,11 +9,12 @@ import Products from '@/pages/Products';
 import Blog from '@/pages/Blog';
 import User from '@/pages/User';
 import NotFound from '@/pages/Page404';
+import Sales from '@/pages/Sales'
 import Categories from './pages/Categories';
 import Devolutions from './pages/Devolutions';
 
 
-export const Router = (): ReactElement => {
+export const Router = (): ReactElement => { 
     return (
         <Routes>
             <Route path="/dashboard" element={<DashboardLayout />}>
@@ -24,6 +25,7 @@ export const Router = (): ReactElement => {
                 <Route path="blog" element={<Blog />} />
                 <Route path="inventario" element={<Products />} />
                 <Route path="customers" element={<Products />} />
+                <Route path="sales" element={<Sales/>} />
                 <Route path="categories" element={<Categories />} />
                 <Route path="Devolutions" element={<Devolutions />} />
             </Route>
