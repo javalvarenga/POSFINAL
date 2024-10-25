@@ -25,6 +25,11 @@ const sidebarConfig: NavItemConfig[] = [
         icon: getIcon(peopleFill)
     },
     {
+        title: 'sales',
+        path: '/dashboard/sales',
+        icon: <Icon fontSize={35} icon="raphael:cart" />
+    },
+    {
         title: 'productos',
         path: '/dashboard/products',
         icon: getIcon(shoppingBagFill)

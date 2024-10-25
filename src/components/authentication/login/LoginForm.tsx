@@ -12,9 +12,11 @@ import {
     TextField,
     IconButton,
     InputAdornment,
-    FormControlLabel
+    FormControlLabel,
+    Divider
 } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { login } from '@/services/users';
 
 // ----------------------------------------------------------------------
 
@@ -23,21 +25,23 @@ const LoginForm = (): JSX.Element => {
     const [showPassword, setShowPassword] = useState(false);
 
     const LoginSchema = Yup.object().shape({
-        email: Yup.string()
-            .email('Email must be a valid email address')
-            .required('Email is required'),
-        password: Yup.string().required('Password is required')
+        username: Yup.string().required('El usuario es requerido'),
+        password: Yup.string().required('La contraseña es requerida')
     });
 
     const formik = useFormik({
         initialValues: {
-            email: '',
+            username: '',
             password: '',
-            remember: true
         },
         validationSchema: LoginSchema,
-        onSubmit: () => {
-            navigate('/dashboard', { replace: true });
+        onSubmit: async (values) => {
+            /* set or create localStorage key */
+            const loginRequest = await login(values);
+            if (loginRequest.id_empleado) {
+               localStorage.setItem('USER', JSON.stringify(loginRequest));
+                navigate('/dashboard', { replace: true });
+            }
         }
     });
 
@@ -54,11 +58,10 @@ const LoginForm = (): JSX.Element => {
                     <TextField
                         fullWidth
                         autoComplete="username"
-                        type="email"
-                        label="Email address"
-                        {...getFieldProps('email')}
-                        error={Boolean(touched.email && errors.email)}
-                        helperText={touched.email && errors.email}
+                        label="Usuario"
+                        {...getFieldProps('username')}
+                        error={Boolean(touched.username && errors.username)}
+                        helperText={touched.username && errors.username}
                     />
 
                     <TextField
@@ -80,8 +83,8 @@ const LoginForm = (): JSX.Element => {
                         helperText={touched.password && errors.password}
                     />
                 </Stack>
-
-                <Stack
+                <Divider sx={{ my: 3 }} />
+                {/*   <Stack
                     direction="row"
                     alignItems="center"
                     justifyContent="space-between"
@@ -97,7 +100,7 @@ const LoginForm = (): JSX.Element => {
                     <Link component={RouterLink} variant="subtitle2" to="#">
                         Forgot password?
                     </Link>
-                </Stack>
+                </Stack> */}
 
                 <LoadingButton
                     fullWidth
@@ -106,7 +109,7 @@ const LoginForm = (): JSX.Element => {
                     variant="contained"
                     loading={isSubmitting}
                 >
-                    Login
+                    Iniciar Sesión
                 </LoadingButton>
             </Form>
         </FormikProvider>

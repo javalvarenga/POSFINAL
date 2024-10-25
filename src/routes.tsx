@@ -10,10 +10,11 @@ import Accounts from '@/pages/Accounts';
 import Blog from '@/pages/Blog';
 import User from '@/pages/User';
 import NotFound from '@/pages/Page404';
+import Sales from '@/pages/Sales'
 import Categories from './pages/Categories';
 
 
-export const Router = (): ReactElement => {
+export const Router = (): ReactElement => { 
     return (
         <Routes>
             <Route path="/dashboard" element={<DashboardLayout />}>
@@ -26,6 +27,7 @@ export const Router = (): ReactElement => {
                 <Route path="customers" element={<Products />} />
                 <Route path="accounts" element={<Accounts/>} />
                 <Route path="categories" element={<User />} />
+                <Route path="sales" element={<Sales/>} />
                 <Route path="categories" element={<Categories />} />
             </Route>
             <Route path="/" element={<LogoOnlyLayout />}>
