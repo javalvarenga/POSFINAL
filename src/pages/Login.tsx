@@ -37,17 +37,17 @@ const ContentStyle = styled('div')(({ theme }) => ({
 const Login = (): JSX.Element => {
     return (
         <RootStyle>
-            <AuthLayout>
+            {/* <AuthLayout>
                 Don’t have an account? &nbsp;
                 <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
                     Get started
                 </Link>
-            </AuthLayout>
+            </AuthLayout> */}
 
             <MHidden width="mdDown">
                 <SectionStyle>
                     <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-                        Hi, Welcome Back
+                        Vende con confianza, gestiona con facilidad.
                     </Typography>
                     <img src={IllustrationLoginImage} alt="login" />
                 </SectionStyle>
@@ -57,24 +57,22 @@ const Login = (): JSX.Element => {
                 <ContentStyle>
                     <Stack sx={{ mb: 5 }}>
                         <Typography variant="h4" gutterBottom>
-                            Sign in to Minimal
+                            Bienvenido
                         </Typography>
                         <Typography sx={{ color: 'text.secondary' }}>
-                            Enter your details below.
+                            ingresa tu usuario y contraseña
                         </Typography>
                     </Stack>
-                    <AuthSocial />
-
+                    {/*<AuthSocial />*/}
                     <LoginForm />
-
-                    <MHidden width="smUp">
+                   {/*  <MHidden width="smUp">
                         <Typography variant="body2" align="center" sx={{ mt: 3 }}>
                             Don’t have an account?&nbsp;
                             <Link variant="subtitle2" component={RouterLink} to="register">
                                 Get started
                             </Link>
                         </Typography>
-                    </MHidden>
+                    </MHidden> */}
                 </ContentStyle>
             </Container>
         </RootStyle>

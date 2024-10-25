@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { FormGroup, TextField, Button, Box } from '@mui/material';
-import { createProduct, updateProduct } from '@/services/products';
-import {  isImageFile, toBase64 } from '@/utils';
+import { TextField, Button } from '@mui/material';
+
 import SweetAlertHandler from '@/components/sweetAlert';
 import { IProduct } from '@/models';
 import { createCategory } from '@/services/categories';
@@ -23,7 +22,7 @@ const CreateCategoryForm = (props: Props) => {
             categoryName: '',
         },
         validationSchema: Yup.object({
-            categoryName: Yup.string().required('El nombre de la categoria es requerido'),
+            categoryName: Yup.string().required('El nombre de la categoría es requerido'),
         }),
         onSubmit: async (values) => {
             try {
@@ -31,7 +30,7 @@ const CreateCategoryForm = (props: Props) => {
                 const action = createCategory(values?.categoryName);
 
                 SweetAlertHandler({
-                    title: 'categoria creada correctamente',
+                    title: 'categoría creada correctamente',
                     icon: 'success'
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -53,14 +52,14 @@ const CreateCategoryForm = (props: Props) => {
             {/* Formulario para crear producto */}
             <TextField
                 fullWidth
-                label="Nombre de la categoria"
+                label="Nombre de la categoría"
                 id="categoryName"
                 name="categoryName"
                 value={formik.values.categoryName}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                error={formik.touched.productName && Boolean(formik.errors.categoryName)}
-                helperText={formik.touched.productName && formik.errors.categoryName}
+                error={formik.touched.categoryName && Boolean(formik.errors.categoryName)}
+                helperText={formik.touched.categoryName && formik.errors.categoryName}
                 style={{ marginBottom: '1.3rem' }}
             />
            

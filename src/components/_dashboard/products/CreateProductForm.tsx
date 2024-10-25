@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { FormGroup, TextField, Button, Box } from '@mui/material';
+import {
+    FormGroup,
+    TextField,
+    Button,
+    Box,
+    FormControl,
+    MenuItem,
+    Select,
+    InputLabel,
+    FormHelperText
+} from '@mui/material';
 import { createProduct, updateProduct } from '@/services/products';
-import {  isImageFile, toBase64 } from '@/utils';
+import { isImageFile, toBase64 } from '@/utils';
 import SweetAlertHandler from '@/components/sweetAlert';
 import { IProduct } from '@/models';
+import useGetCategories from '@/hooks/categories/useGetCategories';
 
 interface Props {
     product?: IProduct;
@@ -16,6 +27,12 @@ const CreateProductForm = (props: Props) => {
     const { onFinish, product } = props;
     const [dragActive, setDragActive] = useState(false);
     const [fileName, setFileName] = useState('');
+    const [queryKey, setQueryKey] = useState(new Date());
+    const { categoriesList, isFetching } = useGetCategories(queryKey);
+
+    useEffect(() => {
+        setQueryKey(new Date());
+    }, []);
 
     // Funciones de manejo de drag and drop
     const handleDrag = (event) => {
@@ -50,6 +67,7 @@ const CreateProductForm = (props: Props) => {
             price: product?.price || '',
             quantity: product?.quantity || '',
             description: product?.description || '',
+            categoryId: product?.categoryId || '',
             image: product?.imageUrl || null
         },
         validationSchema: Yup.object({
@@ -60,12 +78,15 @@ const CreateProductForm = (props: Props) => {
             quantity: Yup.number()
                 .required('La cantidad es requerida')
                 .integer('Debe ser un número entero'),
+            categoryId: Yup.string().required('La categoría es obligatoria'),
             description: Yup.string().required('La descripción es requerida'),
             image: Yup.mixed().required('La imagen es requerida')
         }),
         onSubmit: async (values) => {
             try {
-                const imageData = isImageFile(values.image) ? values.image : await toBase64(values.image);
+                const imageData = isImageFile(values.image)
+                    ? values.image
+                    : await toBase64(values.image);
 
                 const productData = {
                     ...values,
@@ -73,9 +94,13 @@ const CreateProductForm = (props: Props) => {
                     image: imageData
                 };
 
-                const action = product ? await updateProduct(productData) : await createProduct(productData);
+                const action = product
+                    ? await updateProduct(productData)
+                    : await createProduct(productData);
                 SweetAlertHandler({
-                    title: product ? 'Producto actualizado correctamente' : 'Producto creado correctamente',
+                    title: product
+                        ? 'Producto actualizado correctamente'
+                        : 'Producto creado correctamente',
                     icon: 'success'
                 }).then((result) => {
                     if (result.isConfirmed) {
@@ -91,6 +116,12 @@ const CreateProductForm = (props: Props) => {
     });
 
     const { resetForm, handleSubmit } = formik;
+
+    const categoryOptions = categoriesList?.map((category) => (
+        <MenuItem key={category.categoryId} value={category.categoryId}>
+            {category.categoryName}
+        </MenuItem>
+    ));
 
     return (
         <form onSubmit={handleSubmit}>
@@ -145,7 +176,25 @@ const CreateProductForm = (props: Props) => {
                 helperText={formik.touched.description && formik.errors.description}
                 style={{ marginBottom: '1.3rem' }}
             />
-            {product?.imageUrl && (
+            <FormControl
+                fullWidth
+                error={formik.touched.categoryId && Boolean(formik.errors.categoryId)}
+            >
+                <InputLabel id="categoryId">Categoría</InputLabel>
+                <Select
+                    labelId="categoryId"
+                    id="categoryId"
+                    name="categoryId"
+                    value={formik.values.categoryId}
+                    onChange={formik.handleChange}
+                >
+                    {categoryOptions}
+                </Select>
+                {formik.touched.categoryId && formik.errors.categoryId ? (
+                    <FormHelperText>{formik.errors.categoryId}</FormHelperText>
+                ) : null}
+            </FormControl>
+            {product?.imageUrl && !formik.values.image && (
                 <img
                     src={formik.values.image || product?.imageUrl || ''}
                     alt={product?.productName}
@@ -193,7 +242,12 @@ const CreateProductForm = (props: Props) => {
                 )}
             </FormGroup>
 
-            <Button type="submit" variant="contained" color={product ? 'warning' : 'primary'} fullWidth>
+            <Button
+                type="submit"
+                variant="contained"
+                color={product ? 'warning' : 'primary'}
+                fullWidth
+            >
                 {product ? 'Editar' : 'Crear'} Producto
             </Button>
         </form>

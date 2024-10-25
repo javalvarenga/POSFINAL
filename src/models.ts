@@ -35,6 +35,8 @@ export interface IProduct {
     productName: string;
     description: string;
     imageUrl: string;
+    categoryId: number;
+    categoryName: string;
     price: string;
     quantity: number;
     createdAt: string;
