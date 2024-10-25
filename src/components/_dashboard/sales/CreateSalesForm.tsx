@@ -46,7 +46,26 @@ const CreateSalesForm = (props: Props) => {
     const { onFinish, product } = props;
     const [queryKey, setQueryKey] = useState(0);
     const { productsList, isFetching } = useGetProducts(queryKey);
- 
+
+    // Estado para productos seleccionados
+    const [selectedProducts, setSelectedProducts] = useState<{ ProductId: number; cantidad: number }[]>([]);
+
+    // Funciones para manejar la selección de productos y cantidad
+    const handleAddProduct = () => {
+        setSelectedProducts([...selectedProducts, { ProductId: 0, cantidad: 1 }]);
+    };
+
+    const handleProductChange = (index: number, field: string, value: any) => {
+        const updatedProducts = selectedProducts.map((product, i) =>
+            i === index ? { ...product, [field]: value } : product
+        );
+        setSelectedProducts(updatedProducts);
+    };
+
+    const handleRemoveProduct = (index: number) => {
+        setSelectedProducts(selectedProducts.filter((_, i) => i !== index));
+    };
+
     // Inicialización de Formik
     const formik = useFormik({
         initialValues: {
@@ -62,16 +81,10 @@ const CreateSalesForm = (props: Props) => {
             saldo: '',
         },
         validationSchema: validationSchema,
-
-
-        
         onSubmit: async (values) => {
             try {
-                const productos = [{
-                    ProductId: 2,
-                    cantidad: 1
-                  }]
-                const action = createSale({ ...values, productos });
+                // Incluir los productos seleccionados en la venta
+                const action = createSale({ ...values, productos: selectedProducts });
 
                 SweetAlertHandler({
                     title: 'Venta realizada correctamente',
@@ -93,7 +106,7 @@ const CreateSalesForm = (props: Props) => {
 
     return (
         <form onSubmit={handleSubmit}>
-            {/* Formulario para crear producto */}
+            {/* Formulario para crear venta */}
             <TextField
                 fullWidth
                 label="Nombre"
@@ -220,13 +233,51 @@ const CreateSalesForm = (props: Props) => {
                 helperText={formik.touched.saldo && formik.errors.saldo}
                 style={{ marginBottom: '1.3rem' }}
             />
-           
+            
+            <div>
+    <Button onClick={handleAddProduct}>Agregar Producto</Button>
+    {selectedProducts.map((product, index) => (
+        <div key={index} style={{ display: 'flex', marginBottom: '1rem' }}>
+            <TextField
+                select
+                label="Producto"
+                value={product.ProductId}
+                onChange={(e) => handleProductChange(index, 'ProductId', e.target.value)}
+                SelectProps={{ native: true }}
+                style={{ marginRight: '1rem' }}
+            >
+                <option value={0}>Seleccionar Producto</option>
+                {/* Verifica que productsList esté definido y tenga datos antes de mapear */}
+                {productsList && productsList.length > 0 ? (
+                    productsList.map((prod: IProduct) => (
+                        <option key={prod.productId} value={prod.productId}>
+                            {prod.productName}
+                        </option>
+                    ))
+                ) : (
+                    <option disabled>Cargando productos...</option>
+                )}
+            </TextField>
+            <TextField
+                label="Cantidad"
+                type="number"
+                value={product.cantidad}
+                onChange={(e) => handleProductChange(index, 'cantidad', e.target.value)}
+                style={{ marginRight: '1rem' }}
+            />
+            <Button onClick={() => handleRemoveProduct(index)}>Eliminar</Button>
+        </div>
+    ))}
+</div>
 
-            <Button type="submit" variant="contained" color={product ? 'warning' : 'primary'} fullWidth>
-                Crear categoria
+
+            {/* Botón de envío */}
+            <Button type="submit" variant="contained" color="primary">
+                Realizar Venta
             </Button>
         </form>
     );
 };
 
 export default CreateSalesForm;
+
