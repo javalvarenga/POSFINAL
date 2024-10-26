@@ -28,10 +28,15 @@ const sidebarConfig: NavItemConfig[] = [
         icon: getIcon(shoppingBagFill)
     },
     {
+        title: 'Clientes',
+        path: '/dashboard/accounts',
+        icon: <Icon icon="solar:hand-money-bold-duotone" fontSize={45} />
+    },
+    {
         title: 'Devoluciones',
         path: '/dashboard/devolutions',
         icon: <Icon icon="lsicon:sales-return-filled" fontSize={30} />
-    },
+    }
 ];
 
 export default sidebarConfig;
