@@ -9,6 +9,7 @@ import useGetSales from '@/hooks/sales/useGetSales';
 import DynamicTable from '@/components/DynamicTable';
 import { fDateTime } from '@/utils/formatTime';
 import BasicIndicator from '@/components/_dashboard/products/BasicIndicator';
+import DownloadPDFButton from '@/components/_dashboard/sales/DownloadPDFButton';
 
 const Sales = (): JSX.Element => {
     const [openSlideCreateSales, setOpenSlideCreateSales] = useState(false);
@@ -21,7 +22,12 @@ const Sales = (): JSX.Element => {
         { id: 'producto', label: 'Productos' },
         { id: 'cantidad', label: 'Cantidad' },
         { id: 'descuento', label: 'Descuento' },
-        { id: 'total', label: 'Total' }
+        { id: 'total', label: 'Total' },
+        {
+            id: 'acciones',
+            label: 'Acciones',
+            render: (row) => <DownloadPDFButton saleId={row.idVenta} /> // Añadir el botón para descargar PDF
+        }
     ];
 
     const totalSales = salesList.length;
