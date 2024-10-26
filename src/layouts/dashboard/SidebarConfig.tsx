@@ -35,7 +35,7 @@ const sidebarConfig: NavItemConfig[] = [
         icon: getIcon(shoppingBagFill)
     },
     {
-        title: 'cuentas',
+        title: 'Clientes',
         path: '/dashboard/accounts',
         icon: <Icon icon="solar:hand-money-bold-duotone" fontSize={45} />
     },
