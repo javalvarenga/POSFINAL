@@ -22,7 +22,7 @@ const ExportCSV = ({ data, columns }) => {
         const url = URL.createObjectURL(blob); // Crear un URL del Blob
         const link = document.createElement('a'); // Crear un enlace
         link.href = url;
-        link.setAttribute('download', 'data.xlsx'); // Nombre del archivo
+        link.setAttribute('download', 'data.csv'); // Nombre del archivo
         document.body.appendChild(link);
         link.click(); // Simular clic para descargar
         document.body.removeChild(link); // Limpiar el DOM

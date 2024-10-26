@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const PROD_URL = 'http://localhost:3001';
-const BASE_URL = 'api/users';
+import { PROD_URL } from '@/utils';const BASE_URL = 'api/users';
 
 
 export const login = async (user) => {

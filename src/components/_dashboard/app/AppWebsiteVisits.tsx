@@ -1,46 +1,64 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { merge } from 'lodash';
 import ReactApexChart from 'react-apexcharts';
 import { Card, CardHeader, Box } from '@mui/material';
 import { BaseOptionChart } from '../../charts';
 import { ApexOptions } from 'apexcharts';
+import useGetSales from '@/hooks/sales/useGetSales';
+import { format } from 'date-fns';
 
-const CHART_DATA = [
-    {
-        name: 'Team A',
-        type: 'column',
-        data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30]
-    },
-    {
-        name: 'Team B',
-        type: 'area',
-        data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43]
-    },
-    {
-        name: 'Team C',
-        type: 'line',
-        data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39]
-    }
-];
+/*
+sale: of salesList 
+{
+    "idVenta": 27,
+    "fecha": "2024-10-02T00:00:00.000Z",
+    "nombre": "prueba0",
+    "producto": "Bocinas JBL, Laptop Asus",
+    "cantidad": "2",
+    "descuento": "10.00",
+    "total": "15841.49"
+}
+*/
 
-export const AppWebsiteVisits = (): JSX.Element => {
+const AppWebsiteVisits = (): JSX.Element => {
+
+    const [queryKey, setQueryKey] = useState(new Date());
+    const { salesList, isFetching } = useGetSales(queryKey);
+
+    // Consolidar datos de ventas por día
+    const consolidatedDataByDay = salesList.reduce((acc, sale) => {
+        const date = format(new Date(sale.fecha), 'dd/MM/yyyy');
+        if (!acc[date]) {
+            acc[date] = 0;
+        }
+        acc[date] += parseFloat(sale.total);
+        return acc;
+    }, {});
+
+    // Crear transformedData y labels a partir de los datos consolidados
+    const transformedData = Object.keys(consolidatedDataByDay).map(date => ({
+        x: new Date(date.split('/').reverse().join('-')).getTime(), // Convertir la fecha a timestamp
+        y: consolidatedDataByDay[date] // Total de ventas para ese día
+    }));
+
+    const labels = Object.keys(consolidatedDataByDay);
+
+    
+
+    const CHART_DATA = [
+        {
+            name: 'Ventas',
+            type: 'column',
+            data: transformedData,
+            color: '#7300DF',
+        },
+    ];
+
     const chartOptions: ApexOptions = merge(BaseOptionChart(), {
-        stroke: { width: [0, 2, 3] },
+        stroke: { width: [3] },
         plotOptions: { bar: { columnWidth: '11%', borderRadius: 4 } },
-        fill: { type: ['solid', 'gradient', 'solid'] },
-        labels: [
-            '01/01/2003',
-            '02/01/2003',
-            '03/01/2003',
-            '04/01/2003',
-            '05/01/2003',
-            '06/01/2003',
-            '07/01/2003',
-            '08/01/2003',
-            '09/01/2003',
-            '10/01/2003',
-            '11/01/2003'
-        ],
+        fill: { type: 'solid' },
+        labels: labels,
         xaxis: { type: 'datetime' },
         tooltip: {
             shared: true,
@@ -48,17 +66,24 @@ export const AppWebsiteVisits = (): JSX.Element => {
             y: {
                 formatter: (y) => {
                     if (typeof y !== 'undefined') {
-                        return `${y.toFixed(0)} visits`;
+                        return `Q${y.toFixed(2)}`;
                     }
                     return y;
                 }
+            }
+        },
+        chart: {
+            zoom: {
+                enabled: true,
+                type: 'x',
+                autoScaleYaxis: true
             }
         }
     });
 
     return (
         <Card>
-            <CardHeader title="Website Visits" subheader="(+43%) than last year" />
+            <CardHeader title="Ventas por día" subheader="total de ventas por día" />
             <Box sx={{ p: 3, pb: 1 }} dir="ltr">
                 <ReactApexChart
                     type="line"

@@ -21,3 +21,6 @@ export const isImageFile = (image) => {
     return true;
   }
 };
+
+export const PROD_URL = 'https://sevenpos.lat';
+//export const PROD_URL = 'http://localhost:3001';

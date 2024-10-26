@@ -42,12 +42,12 @@ const getComparator = (order: 'asc' | 'desc', orderBy: string) => {
 const DynamicTable: React.FC<DynamicTableProps> = ({ 
   data, 
   columns, 
-  initialRowsPerPage = 5
+  initialRowsPerPage = 10
 }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);
   const [orderBy, setOrderBy] = useState<string>(columns[0].id);
-  const [order, setOrder] = useState<'asc' | 'desc'>('asc');
+  const [order, setOrder] = useState<'asc' | 'desc'>('desc');
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleRequestSort = (property: string) => {

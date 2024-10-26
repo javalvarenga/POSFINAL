@@ -8,7 +8,7 @@ import { alpha } from '@mui/material/styles';
 import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@mui/material';
 import MenuPopover from '@/components/MenuPopover';
 import account from '@/_mocks_/account';
-
+import { useNavigate } from 'react-router-dom';
 const MENU_OPTIONS = [
     {
         label: 'Home',
@@ -21,7 +21,9 @@ const AccountPopover = (): JSX.Element => {
     const anchorRef = useRef(null);
     const [open, setOpen] = useState(false);
     const userData = JSON.parse(localStorage.getItem('USER'));
-    console.log('userData', userData);
+
+    const navigate = useNavigate();
+
     const profileInfo = {
         displayName: userData?.nombre,
         username: userData?.usuario,
@@ -106,7 +108,7 @@ const AccountPopover = (): JSX.Element => {
                         variant="outlined"
                         onClick={() => {
                             localStorage.setItem('USER', JSON.stringify(null));
-                            location.href = '/login';
+                            navigate('/login');
                         }}
                     >
                         Logout

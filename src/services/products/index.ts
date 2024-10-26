@@ -1,10 +1,9 @@
 import axios from 'axios';
 
-const PROD_URL = 'http://localhost:3001';
+import { PROD_URL } from '@/utils';
 const BASE_URL = 'api/products';
 
 export const getAllProducts = async () => {
-
     const url = `${PROD_URL}/${BASE_URL}/getProducts`;
 
     try {
@@ -18,7 +17,6 @@ export const getAllProducts = async () => {
 };
 
 export const createProduct = async (product) => {
-
     const url = `${PROD_URL}/${BASE_URL}/createProduct`;
 
     try {
@@ -31,12 +29,10 @@ export const createProduct = async (product) => {
 };
 
 export const getProduct = async (productId) => {
-
     const url = `${PROD_URL}/${BASE_URL}/getProduct/`;
 
     try {
         const response = await axios.get(url, {
- 
             params: {
                 productId: productId
             }

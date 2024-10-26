@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 import { PROD_URL } from '@/utils';
-const BASE_URL = 'api/sales';
+const BASE_URL = 'api/returns';
 
-export const createSale = async (sale) => {
-    const url = `${PROD_URL}/${BASE_URL}/createSales`;
+export const createDevolucion = async (devolucion) => {
+    const url = `${PROD_URL}/${BASE_URL}/createDevolucion`;
 
     try {
-        const response = await axios.post(url, { ...sale });
+        const response = await axios.post(url, devolucion);
         return response.data;
     } catch (error) {
         console.error('Error :', error);
@@ -15,11 +15,12 @@ export const createSale = async (sale) => {
     }
 };
 
-export const getSales = async () => {
-    const url = `${PROD_URL}/${BASE_URL}/getSales`;
+export const getDevolutions = async () => {
+    const url = `${PROD_URL}/${BASE_URL}/getDevoluciones`;
 
     try {
         const response = await axios.get(url);
+        console.log(response.data);
 
         return response.data;
     } catch (error) {

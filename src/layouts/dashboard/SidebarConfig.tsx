@@ -9,8 +9,6 @@ import personAddFill from '@iconify/icons-eva/person-add-fill';
 import alertTriangleFill from '@iconify/icons-eva/alert-triangle-fill';
 import { NavItemConfig } from '@/models';
 
-
-
 const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
 
 const sidebarConfig: NavItemConfig[] = [
@@ -20,12 +18,7 @@ const sidebarConfig: NavItemConfig[] = [
         icon: getIcon(pieChart2Fill)
     },
     {
-        title: 'user',
-        path: '/dashboard/user',
-        icon: getIcon(peopleFill)
-    },
-    {
-        title: 'sales',
+        title: 'Ventas',
         path: '/dashboard/sales',
         icon: <Icon fontSize={35} icon="raphael:cart" />
     },
@@ -40,24 +33,9 @@ const sidebarConfig: NavItemConfig[] = [
         icon: <Icon icon="solar:hand-money-bold-duotone" fontSize={45} />
     },
     {
-        title: 'blog',
-        path: '/dashboard/blog',
-        icon: getIcon(fileTextFill)
-    },
-    {
-        title: 'login',
-        path: '/login',
-        icon: getIcon(lockFill)
-    },
-    {
-        title: 'register',
-        path: '/register',
-        icon: getIcon(personAddFill)
-    },
-    {
-        title: 'Not found',
-        path: '/404',
-        icon: getIcon(alertTriangleFill)
+        title: 'Devoluciones',
+        path: '/dashboard/devolutions',
+        icon: <Icon icon="lsicon:sales-return-filled" fontSize={30} />
     }
 ];
 
