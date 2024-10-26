@@ -62,10 +62,10 @@ const DashboardSidebar = (props: Props): JSX.Element => {
                         <Avatar src={account.photoURL} alt="photoURL" />
                         <Box sx={{ ml: 2 }}>
                             <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                                {userData.nombre}
+                                {userData?.nombre}
                             </Typography>
                             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                {userData.usuario}
+                                {userData?.usuario}
                             </Typography>
                         </Box>
                     </AccountStyle>
