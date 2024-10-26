@@ -60,7 +60,7 @@ const EcommerceShop = (): JSX.Element => {
     }));
 
     return (
-        <Page title="Dashboard: Products | Minimal-UI">
+        <Page title="Productos">
             <Container>
                 <Typography variant="h4" sx={{ mb: 5 }}>
                     Productos

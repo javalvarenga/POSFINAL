@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Box, Link, Drawer, Typography, Avatar } from '@mui/material';
@@ -32,6 +32,7 @@ interface Props {
 }
 
 const DashboardSidebar = (props: Props): JSX.Element => {
+    
     const { isOpenSidebar, onCloseSidebar } = props;
     const { pathname } = useLocation();
     const userData = JSON.parse(localStorage.getItem('USER'));

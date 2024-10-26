@@ -38,7 +38,7 @@ const Devolutions = (): JSX.Element => {
     });
     
     return (
-        <Page title="User | Minimal-UI">
+        <Page title="Devoluciones">
             <Container>
                 <Typography variant="h4">Devoluciones</Typography>
                 <Grid container justifyContent={'center'}>

@@ -42,7 +42,7 @@ const getComparator = (order: 'asc' | 'desc', orderBy: string) => {
 const DynamicTable: React.FC<DynamicTableProps> = ({ 
   data, 
   columns, 
-  initialRowsPerPage = 5
+  initialRowsPerPage = 10
 }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(initialRowsPerPage);

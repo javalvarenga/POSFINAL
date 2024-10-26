@@ -14,7 +14,6 @@ const Sales = (): JSX.Element => {
     const [openSlideCreateSales, setOpenSlideCreateSales] = useState(false);
     const [queryKey, setQueryKey] = useState(0);
     const { salesList, isFetching } = useGetSales(queryKey);
-    console.log('Sales List: ', salesList);
     const columns = [
         { id: 'idVenta', label: 'ID Venta' },
         { id: 'fecha', label: 'Fecha ' },
@@ -32,8 +31,6 @@ const Sales = (): JSX.Element => {
         0
     );
 
-    // Imprimir el total
-    console.log('Total de ventas:', totalValueSales);
 
     const mappedData = salesList?.map((sale) => ({
         ...sale,

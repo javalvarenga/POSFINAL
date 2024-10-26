@@ -194,7 +194,7 @@ const CreateProductForm = (props: Props) => {
                     <FormHelperText>{formik.errors.categoryId}</FormHelperText>
                 ) : null}
             </FormControl>
-            {product?.imageUrl && !formik.values.image && (
+            {(product?.imageUrl || !formik.values.image) && (
                 <img
                     src={formik.values.image || product?.imageUrl || ''}
                     alt={product?.productName}

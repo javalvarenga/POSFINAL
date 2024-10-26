@@ -42,7 +42,7 @@ const Categories = (): JSX.Element => {
     ];
 
     return (
-        <Page title="User | Minimal-UI">
+        <Page title="Categorias">
             <Container>
                 <Typography variant="h4">Categorías</Typography>
 
