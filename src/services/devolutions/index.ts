@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const PROD_URL = 'http://localhost:3001';
+import { PROD_URL } from '@/utils';
 const BASE_URL = 'api/returns';
 
 export const createDevolucion = async (devolucion) => {

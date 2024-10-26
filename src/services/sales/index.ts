@@ -1,12 +1,9 @@
 import axios from 'axios';
 
-const PROD_URL = 'http://localhost:3001';
+import { PROD_URL } from '@/utils';
 const BASE_URL = 'api/sales';
 
-
-
 export const createSale = async (sale) => {
-
     const url = `${PROD_URL}/${BASE_URL}/createSales`;
 
     try {
@@ -19,7 +16,6 @@ export const createSale = async (sale) => {
 };
 
 export const getSales = async () => {
-
     const url = `${PROD_URL}/${BASE_URL}/getSales`;
 
     try {

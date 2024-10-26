@@ -7,8 +7,10 @@ import SlidingPane from '@/components/SlidingPane';
 import CreateCategoryForm from '@/components/_dashboard/categories/CreateCategoryForm';
 import useGetCategoriesReport from '@/hooks/categories/useGetCategoriesReport';
 import DynamicTable from '@/components/DynamicTable';
+import { useNavigate } from 'react-router-dom';
 
 const Categories = (): JSX.Element => {
+    const navigate = useNavigate();
     const [openSlideCreateCategory, setOpenSlideCreateCategory] = useState(false);
     const [queryKey, setQueryKey] = useState(0);
     const { categoriesList, isFetching } = useGetCategoriesReport(queryKey);
@@ -43,7 +45,7 @@ const Categories = (): JSX.Element => {
         <Page title="User | Minimal-UI">
             <Container>
                 <Typography variant="h4">Categorías</Typography>
-                
+
                 <Stack
                     direction="row"
                     flexWrap="wrap-reverse"
@@ -53,20 +55,13 @@ const Categories = (): JSX.Element => {
                 >
                     <IconButton
                         onClick={() => {
-                            location.href = '/dashboard/products';
+                            navigate('/dashboard/products');
                         }}
                     >
-                    <Icon icon="ri:arrow-go-back-line" color='#7189FF' />
+                        <Icon icon="ri:arrow-go-back-line" color="#7189FF" />
                     </IconButton>
                     <Stack direction="row" spacing={1} flexShrink={0} sx={{ my: 1 }}>
                         <div>
-                            <IconButton
-                                onClick={() => {
-                                    location.href = '/dashboard/products';
-                                }}
-                            >
-                                <Icon icon="si:grid-duotone" />
-                            </IconButton>
                             <IconButton
                                 onClick={() => {
                                     setOpenSlideCreateCategory(true);

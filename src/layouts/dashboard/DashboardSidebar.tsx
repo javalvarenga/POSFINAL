@@ -34,6 +34,7 @@ interface Props {
 const DashboardSidebar = (props: Props): JSX.Element => {
     const { isOpenSidebar, onCloseSidebar } = props;
     const { pathname } = useLocation();
+    const userData = JSON.parse(localStorage.getItem('USER'));
 
     useEffect(() => {
         if (isOpenSidebar) {
@@ -60,10 +61,10 @@ const DashboardSidebar = (props: Props): JSX.Element => {
                         <Avatar src={account.photoURL} alt="photoURL" />
                         <Box sx={{ ml: 2 }}>
                             <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                                {account.displayName}
+                                {userData.nombre}
                             </Typography>
                             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                                {account.role}
+                                {userData.usuario}
                             </Typography>
                         </Box>
                     </AccountStyle>

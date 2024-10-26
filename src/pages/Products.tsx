@@ -8,6 +8,7 @@ import { Icon } from '@iconify/react';
 import BasicIndicator from '@/components/_dashboard/products/BasicIndicator';
 import ExportCSV from '@/components/exportCSV';
 import { fDate, fDateTime } from '@/utils/formatTime';
+import { useNavigate } from 'react-router-dom';
 
 const columns = [
     { id: 'productId', label: 'ID' },
@@ -21,6 +22,7 @@ const columns = [
 ];
 
 const EcommerceShop = (): JSX.Element => {
+    const navigate = useNavigate();
     const [openSlideAddProduct, setOpenSlideAddProduct] = useState(false);
     const [queryKey, setQueryKey] = useState(0);
     const { productsList, isFetching } = useGetProducts(queryKey);
@@ -107,7 +109,7 @@ const EcommerceShop = (): JSX.Element => {
                         />
                         <IconButton
                             onClick={() => {
-                                location.href = '/dashboard/categories';
+                                navigate('/dashboard/categories')
                             }}
                         >
                             <Icon icon="material-symbols:category" />

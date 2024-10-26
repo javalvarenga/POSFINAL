@@ -1,12 +1,9 @@
 import axios from 'axios';
 
-const PROD_URL = 'http://localhost:3001';
+import { PROD_URL } from '@/utils';
 const BASE_URL = 'api/categories';
 
-
-
 export const createCategory = async (categoryName) => {
-
     const url = `${PROD_URL}/${BASE_URL}/createCategory`;
 
     try {
@@ -19,7 +16,6 @@ export const createCategory = async (categoryName) => {
 };
 
 export const getCategories = async () => {
-
     const url = `${PROD_URL}/${BASE_URL}/getCategories`;
 
     try {
@@ -33,7 +29,6 @@ export const getCategories = async () => {
 };
 
 export const getCategoriesReport = async () => {
-
     const url = `${PROD_URL}/${BASE_URL}/getCategoriesReport`;
 
     try {
