@@ -26,7 +26,6 @@ export const Router = (): ReactElement => {
                 <Route path="inventario" element={<Products />} />
                 <Route path="customers" element={<Products />} />
                 <Route path="accounts" element={<Accounts />} />
-                <Route path="categories" element={<User />} />
                 <Route path="sales" element={<Sales />} />
                 <Route path="categories" element={<Categories />} />
                 <Route path="Devolutions" element={<Devolutions />} />
